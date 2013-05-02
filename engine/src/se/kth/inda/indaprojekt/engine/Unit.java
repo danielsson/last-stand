@@ -1,4 +1,4 @@
-package engine;
+package se.kth.inda.indaprojekt.engine;
 
 /**
  * A Unit is a WorldObject that is defined by its' living

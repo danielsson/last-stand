@@ -1,4 +1,4 @@
-package engine;
+package se.kth.inda.indaprojekt.engine;
 
 import java.awt.Dimension;
 import java.util.ArrayList;

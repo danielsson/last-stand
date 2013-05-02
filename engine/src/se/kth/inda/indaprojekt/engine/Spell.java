@@ -1,4 +1,4 @@
-package engine;
+package se.kth.inda.indaprojekt.engine;
 
 /**
  * A Spell is an non-material object that is casted by Wizards and 

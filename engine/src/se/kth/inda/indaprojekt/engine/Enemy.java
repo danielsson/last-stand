@@ -1,4 +1,4 @@
-package engine;
+package se.kth.inda.indaprojekt.engine;
 
 /**
  * An Enemy is a Unit that runs towards a target and explodes, inflicting damage,

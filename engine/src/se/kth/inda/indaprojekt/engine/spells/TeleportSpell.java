@@ -1,8 +1,8 @@
-package engine.spells;
+package se.kth.inda.indaprojekt.engine.spells;
 
-import engine.Level;
-import engine.Spell;
-import engine.Wizard;
+import se.kth.inda.indaprojekt.engine.Level;
+import se.kth.inda.indaprojekt.engine.Spell;
+import se.kth.inda.indaprojekt.engine.Wizard;
 
 public class TeleportSpell extends Spell{
 

@@ -1,4 +1,4 @@
-package engine;
+package se.kth.inda.indaprojekt.engine;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -6,16 +6,17 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-import engine.spells.FireBall;
-import engine.spells.ShockwaveSpell;
-import engine.spells.TeleportSpell;
+import se.kth.inda.indaprojekt.engine.spells.FireBall;
+import se.kth.inda.indaprojekt.engine.spells.ShockwaveSpell;
+import se.kth.inda.indaprojekt.engine.spells.TeleportSpell;
+
 
 public class GameEngine {
 		
 	//The level the gameTicker will affect.
 	private Level currentLevel;
 	
-	//The timer that runs the engine.
+	//The timer that runs the se.kth.inda.indaprojekt.engine.
 	private Timer gameTicker;
 	
 	/**
@@ -43,7 +44,7 @@ public class GameEngine {
 						onLevelLost();
 				}
 				else
-					throw new IllegalStateException("No existing level in the engine");
+					throw new IllegalStateException("No existing level in the se.kth.inda.indaprojekt.engine");
 			}
 			
 		});
@@ -92,14 +93,14 @@ public class GameEngine {
 	}
 	
 	/**
-	 * The engine will periodically progress the current Level forward until stopped.
+	 * The se.kth.inda.indaprojekt.engine will periodically progress the current Level forward until stopped.
 	 * Or the Level is finished by loss or victory.
 	 * 
 	 * @throws IllgegalStateException if no current Level has been set for the GameEngine.
 	 */
 	public void run(){
 		if(currentLevel == null)
-			throw new IllegalStateException("No existing level in the engine");
+			throw new IllegalStateException("No existing level in the se.kth.inda.indaprojekt.engine");
 		gameTicker.start();
 	}
 	
@@ -127,9 +128,9 @@ public class GameEngine {
 	}
 	
 	/**
-	 * The Level the engine currently is progressing.
+	 * The Level the se.kth.inda.indaprojekt.engine currently is progressing.
 	 * 
-	 * @return The Level the engine currently is progressing.
+	 * @return The Level the se.kth.inda.indaprojekt.engine currently is progressing.
 	 */
 	public Level getCurrentLevel(){
 		return currentLevel;

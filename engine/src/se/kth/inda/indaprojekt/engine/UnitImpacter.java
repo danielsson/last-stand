@@ -1,4 +1,4 @@
-package engine;
+package se.kth.inda.indaprojekt.engine;
 
 /**
  * A UnitImpacter is an object that can hit other Units and

@@ -1,10 +1,11 @@
-package engine.projectiles;
+package se.kth.inda.indaprojekt.engine.projectiles;
 
 import java.util.LinkedList;
 
-import engine.Projectile;
-import engine.Unit;
-import engine.WorldObject;
+import se.kth.inda.indaprojekt.engine.Projectile;
+import se.kth.inda.indaprojekt.engine.Unit;
+import se.kth.inda.indaprojekt.engine.WorldObject;
+
 
 public class ShockwaveBlast extends Projectile{
 

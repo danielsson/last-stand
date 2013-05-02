@@ -1,10 +1,10 @@
-package engine.spells;
+package se.kth.inda.indaprojekt.engine.spells;
 
-import engine.Level;
-import engine.Projectile;
-import engine.Spell;
-import engine.Wizard;
-import engine.projectiles.FireBallProjectile;
+import se.kth.inda.indaprojekt.engine.Level;
+import se.kth.inda.indaprojekt.engine.Projectile;
+import se.kth.inda.indaprojekt.engine.Spell;
+import se.kth.inda.indaprojekt.engine.Wizard;
+import se.kth.inda.indaprojekt.engine.projectiles.FireBallProjectile;
 
 public class FireBall extends Spell{
 	
