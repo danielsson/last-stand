@@ -50,7 +50,7 @@ public class GameActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		
-		setContentView(new GameSurfaceView(this, null));
+		setContentView(R.layout.sample_game_surface_view);
 		//setContentView(R.layout.activity_fullscreen);
 
 		/**final View controlsView = findViewById(R.id.fullscreen_content_controls);
@@ -127,7 +127,7 @@ public class GameActivity extends Activity {
 		// Trigger the initial hide() shortly after the activity has been
 		// created, to briefly hint to the user that UI controls
 		// are available.
-		delayedHide(100);
+		//delayedHide(100);
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class GameActivity extends Activity {
 	 * system UI. This is to prevent the jarring behavior of controls going away
 	 * while interacting with activity UI.
 	 */
-	View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
+	/*View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
 		@Override
 		public boolean onTouch(View view, MotionEvent motionEvent) {
 			if (AUTO_HIDE) {
@@ -156,9 +156,9 @@ public class GameActivity extends Activity {
 	/**
 	 * Schedules a call to hide() in [delay] milliseconds, canceling any
 	 * previously scheduled calls.
-	 */
+	 
 	private void delayedHide(int delayMillis) {
 		mHideHandler.removeCallbacks(mHideRunnable);
 		mHideHandler.postDelayed(mHideRunnable, delayMillis);
-	}
+	} */
 }

@@ -9,6 +9,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -35,7 +36,8 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 		GameThread thread = new GameThread(40);
 		thread.setRunning(true);
 		thread.start();
-			
+		
+		setFocusable(true);
 	}
 
 	@Override
@@ -62,37 +64,37 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 		Canvas canvas = null;
 		
 		try {
-			canvas = surfaceHolder.lockCanvas();
+			canvas = getHolder().lockCanvas();
 			
 			
 			synchronized (surfaceHolder) {
-				draw(canvas);
+				drawStuff(canvas);
 			}
 		} finally {
 			if(canvas != null)
-				surfaceHolder.unlockCanvasAndPost(canvas);
+				getHolder().unlockCanvasAndPost(canvas);
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see android.view.View#onDraw(android.graphics.Canvas)
-	 */
-	@Override
-	public void draw(Canvas canvas) {
-		Log.d("GSW", "onDraw");
-		Level level = engine.getCurrentLevel();
-		WorldObject[] objects = level.getWorldObjects(false);
+	
+	public void drawStuff(Canvas canvas) {
+		Log.d("GSW", "onDraw" +
+				getHolder().getSurface().isValid());
+
+		//Level level = engine.getCurrentLevel();
+		//WorldObject[] objects = level.getWorldObjects(false);
 		
 		//Flush
-		paint.setARGB(1, 1, 1, 1);
+		paint.setARGB(1, 1, 0, 0);
 		canvas.drawPaint(paint);
 		
 		//render objects
-		paint.setARGB(1, 0, 0, 0);
-		paint.setStyle(Style.STROKE);
-		for(WorldObject wo : objects) {
-			canvas.drawCircle((float) wo.getX(), (float) wo.getY(), (float) wo.getRadius(), paint);
-		}
+		//paint.setARGB(1, 0, 0, 0);
+	//	paint.setStyle(Style.STROKE);
+		//paint.setStrokeWidth(5);
+		//for(WorldObject wo : objects) {
+		//	canvas.drawCircle((float) wo.getX(), (float) wo.getY(), (float) wo.getRadius(), paint);
+		//}
 	}
 
 	private class GameThread extends Thread {
@@ -125,7 +127,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 		public void run() {
 			while(isRunning) {
 				try {
-					sleep(sleepTime);
+					//sleep(sleepTime);
 					updateSurfaceView();
 				} catch (Exception e) {
 					// TODO: handle exception

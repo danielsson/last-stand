@@ -1,17 +1,11 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res/se.kth.inda.indaprojekt"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
     <se.kth.inda.indaprojekt.GameSurfaceView
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:background="#ccc"
-        android:paddingBottom="40dp"
-        android:paddingLeft="20dp"
-        app:exampleColor="#33b5e5"
-        app:exampleDimension="24sp"
-        app:exampleDrawable="@android:drawable/ic_menu_add"
-        app:exampleString="Hello, GameSurfaceView" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fullscreen_content2"
+        android:visibility="visible"/>
 
-</FrameLayout>
+</LinearLayout>
