@@ -1,5 +1,7 @@
 package se.kth.inda.indaprojekt;
 
+import se.kth.inda.indaprojekt.engine.Dimension;
+import se.kth.inda.indaprojekt.engine.GameEngine;
 import se.kth.inda.indaprojekt.util.SystemUiHider;
 
 import android.annotation.TargetApi;
@@ -33,7 +35,7 @@ public class GameActivity extends Activity {
 	 * If set, will toggle the system UI visibility upon interaction. Otherwise,
 	 * will show the system UI visibility upon interaction.
 	 */
-	private static final boolean TOGGLE_ON_CLICK = true;
+	private static final boolean TOGGLE_ON_CLICK = false;
 
 	/**
 	 * The flags to pass to {@link SystemUiHider#getInstance}.
@@ -44,17 +46,22 @@ public class GameActivity extends Activity {
 	 * The instance of the {@link SystemUiHider} for this activity.
 	 */
 	private SystemUiHider mSystemUiHider;
-
+	
+	/**
+	 * The game engine.
+	 */
+	private GameEngine engine;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		
-		setContentView(R.layout.sample_game_surface_view);
-		//setContentView(R.layout.activity_fullscreen);
+		setContentView(R.layout.activity_fullscreen);
 
-		/**final View controlsView = findViewById(R.id.fullscreen_content_controls);
-		final View contentView = findViewById(R.id.fullscreen_content);
+		final View controlsView = findViewById(R.id.fullscreen_content_controls);
+		final View contentView = findViewById(R.id.game_view);
 
 		// Set up an instance of SystemUiHider to control the system UI for
 		// this activity.
@@ -117,7 +124,16 @@ public class GameActivity extends Activity {
 		// operations to prevent the jarring behavior of controls going away
 		// while interacting with the UI.
 		findViewById(R.id.dummy_button).setOnTouchListener(
-				mDelayHideTouchListener); */
+				mDelayHideTouchListener);
+		
+		
+		GameSurfaceView gamesSurfaceView = (GameSurfaceView) contentView;
+		
+		engine = new GameEngine(40);
+		
+		gamesSurfaceView.setGameEngine(engine);
+		
+		
 	}
 
 	@Override
@@ -127,7 +143,7 @@ public class GameActivity extends Activity {
 		// Trigger the initial hide() shortly after the activity has been
 		// created, to briefly hint to the user that UI controls
 		// are available.
-		//delayedHide(100);
+		delayedHide(100);
 	}
 
 	/**
@@ -135,7 +151,7 @@ public class GameActivity extends Activity {
 	 * system UI. This is to prevent the jarring behavior of controls going away
 	 * while interacting with activity UI.
 	 */
-	/*View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
+	View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
 		@Override
 		public boolean onTouch(View view, MotionEvent motionEvent) {
 			if (AUTO_HIDE) {
@@ -156,9 +172,9 @@ public class GameActivity extends Activity {
 	/**
 	 * Schedules a call to hide() in [delay] milliseconds, canceling any
 	 * previously scheduled calls.
-	 
+	 */
 	private void delayedHide(int delayMillis) {
 		mHideHandler.removeCallbacks(mHideRunnable);
 		mHideHandler.postDelayed(mHideRunnable, delayMillis);
-	} */
+	} 
 }
