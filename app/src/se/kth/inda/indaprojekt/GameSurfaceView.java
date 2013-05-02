@@ -8,6 +8,7 @@ import android.view.SurfaceView;
  * TODO: document your custom view class.
  */
 public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
+	private SurfaceHolder surfaceHolder;
 
 	public GameSurfaceView(Context context) {
 		super(context);
@@ -34,10 +35,18 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 	}
 	
 	public void updateSurfaceView() {
+		Canvas canvas = null;
 		
+		try {
+			canvas = surfaceHolder.lockCanvas();
+			
+			synchronized (surfaceHolder) {
+				update
+			}
+		}
 	}
 	
-	private static class GameThread extends Thread {
+	private class GameThread extends Thread {
 		
 		volatile boolean isRunning = false;
 		long sleepTime = 0;
@@ -68,7 +77,9 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 			while(isRunning) {
 				try {
 					sleep(sleepTime);
-					GameSurfaceView.this.
+					updateSurfaceView();
+				} catch (Exception e) {
+					// TODO: handle exception
 				}
 			}
 		}
