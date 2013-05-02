@@ -1,15 +1,20 @@
 package se.kth.inda.indaprojekt;
 
 import se.kth.inda.indaprojekt.engine.Dimension;
+import se.kth.inda.indaprojekt.engine.Enemy;
 import se.kth.inda.indaprojekt.engine.GameEngine;
 import se.kth.inda.indaprojekt.engine.Level;
+import se.kth.inda.indaprojekt.engine.Spell;
+import se.kth.inda.indaprojekt.engine.Wizard;
 import se.kth.inda.indaprojekt.engine.WorldObject;
+import se.kth.inda.indaprojekt.engine.projectiles.ShockwaveBlast;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -73,7 +78,6 @@ public class GameSurfaceView extends SurfaceView implements
 			
 			engine.run();
 		}
-
 	}
 
 	@Override
@@ -110,23 +114,47 @@ public class GameSurfaceView extends SurfaceView implements
 	 *            The canvas to draw to.
 	 */
 	public void drawStuff(Canvas canvas) {
-		Log.d("GSW", "onDraw" + getHolder().getSurface().isValid());
+//		Log.d("GSW", "onDraw" + getHolder().getSurface().isValid());
 
 		Level level = engine.getCurrentLevel();
 		WorldObject[] objects = level.getWorldObjects(false);
 
 		// Flush
-		paint.setARGB(255, 0, 0, 0);
+		paint.setARGB(30, 0, 0, 0);
 		canvas.drawPaint(paint);
 
 		// render objects
-		paint.setARGB(255, 255, 255, 255);
 		paint.setStyle(Style.STROKE);
-		paint.setStrokeWidth(5);
+		paint.setStrokeWidth(12);
 		for (WorldObject wo : objects) {
+			if(wo instanceof ShockwaveBlast){
+				paint.setARGB(225, 0, 0, 255);
+			}
+			else if(wo instanceof Enemy){
+				paint.setARGB(255, 255, 0, 0);
+			}
+			else{
+				paint.setARGB(255, 255, 255, 255);
+			}
 			canvas.drawCircle((float) wo.getX(), (float) wo.getY(),
 					(float) wo.getRadius(), paint);
 		}
+	}
+	
+	/**
+	 * TODO Temporary input code.
+	 */
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		if(event.getAction() == MotionEvent.ACTION_UP){
+			Level level = engine.getCurrentLevel();
+			Wizard[] wizards = level.getWizards();
+			if(wizards.length > 0){
+				Spell[] spells = wizards[0].getSpellbook();
+				wizards[0].attemptToCastSpell(spells[2], event.getX(), event.getY());
+			}
+		}
+		return super.onTouchEvent(event);
 	}
 
 	/**

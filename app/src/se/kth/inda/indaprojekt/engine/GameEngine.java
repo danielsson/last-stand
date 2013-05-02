@@ -42,7 +42,7 @@ public class GameEngine {
 		l.addWorldObject(w);
 		
 		for (int i = 0; i < enemies; i++) {
-			l.addWorldObject(new Enemy(30*i,10 , 5, 2, 1, w));
+			l.addWorldObject(new Enemy((d.getWidth()/enemies)*(i+1),-15 , 5, 5, 1, w));
 		}
 		
 		return l;
@@ -151,7 +151,5 @@ public class GameEngine {
 			else
 				throw new IllegalStateException("No existing level in the se.kth.inda.indaprojekt.engine");
 		}
-		
 	}
-
 }
