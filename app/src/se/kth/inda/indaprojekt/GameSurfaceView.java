@@ -1,6 +1,14 @@
 package se.kth.inda.indaprojekt;
 
+import se.kth.inda.indaprojekt.engine.Dimension;
+import se.kth.inda.indaprojekt.engine.GameEngine;
+import se.kth.inda.indaprojekt.engine.Level;
+import se.kth.inda.indaprojekt.engine.WorldObject;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -9,10 +17,21 @@ import android.view.SurfaceView;
  */
 public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callback {
 	private SurfaceHolder surfaceHolder;
+	
+	private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+	private GameEngine engine = new GameEngine(40);
 
 	public GameSurfaceView(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
+		
+		engine.setCurrentLevel(GameEngine.createLevel(new Dimension(100, 100), 30));
+		surfaceHolder = getHolder();
+		surfaceHolder.addCallback(this);
+		
+		GameThread thread = new GameThread(40);
+		thread.setRunning(true);
+		thread.start();
+			
 	}
 
 	@Override
@@ -34,6 +53,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 		
 	}
 	
+	@SuppressLint("WrongCall")
 	public void updateSurfaceView() {
 		Canvas canvas = null;
 		
@@ -41,11 +61,34 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 			canvas = surfaceHolder.lockCanvas();
 			
 			synchronized (surfaceHolder) {
-				update
+				onDraw(canvas);
 			}
+		} finally {
+			if(canvas != null)
+				surfaceHolder.unlockCanvasAndPost(canvas);
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see android.view.View#onDraw(android.graphics.Canvas)
+	 */
+	@Override
+	protected void onDraw(Canvas canvas) {
+		Level level = engine.getCurrentLevel();
+		WorldObject[] objects = level.getWorldObjects(false);
+		
+		//Flush
+		paint.setARGB(1, 0, 0, 0);
+		canvas.drawPaint(paint);
+		
+		//render objects
+		paint.setARGB(1, 1, 1, 1);
+		paint.setStyle(Style.STROKE);
+		for(WorldObject wo : objects) {
+			canvas.drawCircle((float) wo.getX(), (float) wo.getY(), (float) wo.getRadius(), paint);
+		}
+	}
+
 	private class GameThread extends Thread {
 		
 		volatile boolean isRunning = false;
