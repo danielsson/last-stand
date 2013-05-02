@@ -27,8 +27,6 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 	public GameSurfaceView(Context context, AttributeSet attr) {
 		super(context, attr);
 		
-		engine.setCurrentLevel(GameEngine.createLevel(new Dimension(100, 100), 30));
-		engine.run();
 		
 		surfaceHolder = getHolder();
 		surfaceHolder.addCallback(this);
@@ -49,7 +47,9 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-		// TODO Auto-generated method stub
+
+		engine.setCurrentLevel(GameEngine.createLevel(new Dimension(getWidth(), getHeight()), 30));
+		engine.run();
 		
 	}
 
@@ -81,20 +81,20 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 		Log.d("GSW", "onDraw" +
 				getHolder().getSurface().isValid());
 
-		//Level level = engine.getCurrentLevel();
-		//WorldObject[] objects = level.getWorldObjects(false);
+		Level level = engine.getCurrentLevel();
+		WorldObject[] objects = level.getWorldObjects(false);
 		
 		//Flush
-		paint.setARGB(1, 1, 0, 0);
+		paint.setARGB(255, 0, 0, 0);
 		canvas.drawPaint(paint);
 		
 		//render objects
-		//paint.setARGB(1, 0, 0, 0);
-	//	paint.setStyle(Style.STROKE);
-		//paint.setStrokeWidth(5);
-		//for(WorldObject wo : objects) {
-		//	canvas.drawCircle((float) wo.getX(), (float) wo.getY(), (float) wo.getRadius(), paint);
-		//}
+		paint.setARGB(255, 255, 255, 255);
+		paint.setStyle(Style.STROKE);
+		paint.setStrokeWidth(5);
+		for(WorldObject wo : objects) {
+			canvas.drawCircle((float) wo.getX(), (float) wo.getY(), (float) wo.getRadius(), paint);
+		}
 	}
 
 	private class GameThread extends Thread {
