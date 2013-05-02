@@ -9,6 +9,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -21,10 +23,12 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 	private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 	private GameEngine engine = new GameEngine(40);
 
-	public GameSurfaceView(Context context) {
-		super(context);
+	public GameSurfaceView(Context context, AttributeSet attr) {
+		super(context, attr);
 		
 		engine.setCurrentLevel(GameEngine.createLevel(new Dimension(100, 100), 30));
+		engine.run();
+		
 		surfaceHolder = getHolder();
 		surfaceHolder.addCallback(this);
 		
@@ -60,8 +64,9 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 		try {
 			canvas = surfaceHolder.lockCanvas();
 			
+			
 			synchronized (surfaceHolder) {
-				onDraw(canvas);
+				draw(canvas);
 			}
 		} finally {
 			if(canvas != null)
@@ -73,16 +78,17 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 	 * @see android.view.View#onDraw(android.graphics.Canvas)
 	 */
 	@Override
-	protected void onDraw(Canvas canvas) {
+	public void draw(Canvas canvas) {
+		Log.d("GSW", "onDraw");
 		Level level = engine.getCurrentLevel();
 		WorldObject[] objects = level.getWorldObjects(false);
 		
 		//Flush
-		paint.setARGB(1, 0, 0, 0);
+		paint.setARGB(1, 1, 1, 1);
 		canvas.drawPaint(paint);
 		
 		//render objects
-		paint.setARGB(1, 1, 1, 1);
+		paint.setARGB(1, 0, 0, 0);
 		paint.setStyle(Style.STROKE);
 		for(WorldObject wo : objects) {
 			canvas.drawCircle((float) wo.getX(), (float) wo.getY(), (float) wo.getRadius(), paint);
@@ -128,5 +134,7 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 		}
 		
 	}
+	
+	
 	
 }
