@@ -1,6 +1,5 @@
 package se.kth.inda.indaprojekt.engine;
 
-import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -125,7 +124,6 @@ public class Level {
 			unitImpacters.remove((UnitImpacter) o);	
 	}
 	
-	@Deprecated
 	/**
 	 * Returns all WorldObjects in the level.
 	 * SORT NOT YET IMPLEMENTED
@@ -260,7 +258,7 @@ public class Level {
 	 * @return The Size of the Level.
 	 */
 	public Dimension getSize(){
-		return (Dimension) size.clone();
+		return new Dimension(size.getWidth(),size.getHeight());
 	}
 	
 	/**
