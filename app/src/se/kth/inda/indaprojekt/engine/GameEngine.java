@@ -1,10 +1,5 @@
 package se.kth.inda.indaprojekt.engine;
 
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.Timer;
 
 import se.kth.inda.indaprojekt.engine.spells.FireBall;
 import se.kth.inda.indaprojekt.engine.spells.ShockwaveSpell;
@@ -17,7 +12,7 @@ public class GameEngine {
 	private Level currentLevel;
 	
 	//The timer that runs the se.kth.inda.indaprojekt.engine.
-	private Timer gameTicker;
+	private GameTicker gameTicker;
 	
 	/**
 	 * Creates a GameEngine that progresses Levels forward with the
@@ -27,27 +22,7 @@ public class GameEngine {
 	 * per second while this GameEngine is active.
 	 */
 	public GameEngine(int ticksPerSecond){
-		gameTicker = new Timer(1000/ticksPerSecond, new ActionListener(){
-			
-			Long lastTime = (long) 0;
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				Long time = System.currentTimeMillis();
-//				System.out.println(time-lastTime);
-				lastTime = time;
-				if(currentLevel != null){
-					currentLevel.levelTick();
-					if(currentLevel.getState() == LevelState.VICTORY)
-						onLevelVictory();
-					else if(currentLevel.getState() == LevelState.GAMEOVER)
-						onLevelLost();
-				}
-				else
-					throw new IllegalStateException("No existing level in the se.kth.inda.indaprojekt.engine");
-			}
-			
-		});
+		gameTicker = new GameTicker(1000/ticksPerSecond);
 	}
 	
 	/**
@@ -136,5 +111,47 @@ public class GameEngine {
 		return currentLevel;
 	}
 	
+	private class GameTicker{
+		
+		private boolean running = false;
+		private Thread t;
+		
+		public GameTicker(final int delay){
+			t = new Thread(new Runnable(){
+
+				@Override
+				public void run() {
+					while(running){
+						periodicEvent();
+						try {Thread.sleep(delay);} catch (InterruptedException e) {e.printStackTrace();}
+					}
+				}
+				
+			});
+		}
+		
+		public void stop(){
+			running = false;
+		}
+		
+		public void start(){
+			running = true;
+			if(!t.isAlive())
+				t.start();
+		}
+		
+		public void periodicEvent(){
+			if(currentLevel != null){
+				currentLevel.levelTick();
+				if(currentLevel.getState() == LevelState.VICTORY)
+					onLevelVictory();
+				else if(currentLevel.getState() == LevelState.GAMEOVER)
+					onLevelLost();
+			}
+			else
+				throw new IllegalStateException("No existing level in the se.kth.inda.indaprojekt.engine");
+		}
+		
+	}
 
 }
