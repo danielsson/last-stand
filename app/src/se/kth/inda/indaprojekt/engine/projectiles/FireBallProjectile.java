@@ -1,5 +1,7 @@
 package se.kth.inda.indaprojekt.engine.projectiles;
 
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import se.kth.inda.indaprojekt.engine.Projectile;
 import se.kth.inda.indaprojekt.engine.Unit;
 import se.kth.inda.indaprojekt.engine.WorldObject;
@@ -26,5 +28,16 @@ public class FireBallProjectile extends Projectile{
 	public boolean isRelevantTarget(Unit u) {
 		return getCaster() != u ;
 	}
+
+	@Override
+	public Paint getPaint() {
+		Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+		p.setARGB(255, 255, 150, 150);
+		p.setStyle(Style.STROKE);
+		p.setStrokeWidth(6);
+		return p;
+	}
+	
+	
 
 }

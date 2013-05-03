@@ -9,7 +9,7 @@ import se.kth.inda.indaprojekt.engine.projectiles.FireBallProjectile;
 public class FireBall extends Spell{
 	
 	private double radius;
-	private double speed = 2;
+	private double speed = 7;
 	private int damage = 3;
 	
 	public FireBall(Level level, double fireBallRadius) {
@@ -28,7 +28,7 @@ public class FireBall extends Spell{
 
 	@Override
 	public int getManaCost() {
-		return 0;
+		return 1;
 	}
 
 	@Override

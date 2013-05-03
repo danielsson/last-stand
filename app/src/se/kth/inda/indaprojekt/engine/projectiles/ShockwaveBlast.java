@@ -2,6 +2,10 @@ package se.kth.inda.indaprojekt.engine.projectiles;
 
 import java.util.LinkedList;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+
 import se.kth.inda.indaprojekt.engine.Projectile;
 import se.kth.inda.indaprojekt.engine.Unit;
 import se.kth.inda.indaprojekt.engine.WorldObject;
@@ -29,6 +33,15 @@ public class ShockwaveBlast extends Projectile{
 	@Override
 	public boolean isRelevantTarget(Unit u) {
 		return !unitsHit.contains(u) && getCaster() != u;
+	}
+	
+	@Override
+	public Paint getPaint() {
+		Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+		p.setARGB(255, 0, 0, 255);
+		p.setStyle(Style.STROKE);
+		p.setStrokeWidth(25);
+		return p;
 	}
 
 }

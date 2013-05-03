@@ -1,5 +1,8 @@
 package se.kth.inda.indaprojekt.engine;
 
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+
 /**
  * An Enemy is a Unit that runs towards a target and explodes, inflicting damage,
  * upon reaching it but dies in the process.
@@ -49,6 +52,14 @@ public class Enemy extends Unit implements UnitImpacter{
 	@Override
 	public boolean isRelevantTarget(Unit u) {
 		return u == target;
+	}
+
+	@Override
+	public Paint getPaint() {
+		Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+		p.setARGB(255, 255, 0, 0);
+		p.setStyle(Style.FILL);
+		return p;
 	}
 
 }

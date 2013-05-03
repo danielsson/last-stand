@@ -24,6 +24,7 @@ public class GameGestureHandler extends SimpleOnGestureListener {
 	 */
 	public GameGestureHandler(GameEngine e) {
 		engine = e;
+		
 	}
 
 	/** Teleport the wizard to the doubletapped location. */

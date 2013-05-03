@@ -12,7 +12,7 @@ public class TeleportSpell extends Spell{
 
 	@Override
 	public int getManaCost() {
-		return 1;
+		return 4;
 	}
 
 	@Override

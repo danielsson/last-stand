@@ -2,6 +2,9 @@ package se.kth.inda.indaprojekt.engine;
 
 import java.util.ArrayList;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
+
 /**
  * Every existing object in a level is a WorldObject. A WorldObject is an object that has a
  * position in the world and a given radius - all WorldObjects has the shape of a circle.
@@ -16,6 +19,8 @@ public abstract class WorldObject {
 	private double radius; // all worldobjects are circles.
 	private int drawPriority; // A higher drawpriority makes an object appear above other objects.
 	private ArrayList<KnockbackEffect> knockbacks = new ArrayList<KnockbackEffect>();
+	
+	private Paint paint;
 	
 	/**
 	 * Creates a new WorldObject with drawPriority 0.
@@ -41,6 +46,7 @@ public abstract class WorldObject {
 		this.y = y;
 		this.radius = radius;
 		this.drawPriority = drawPriority;
+		paint = getPaint();
 	}
 	
 	/**
@@ -48,6 +54,21 @@ public abstract class WorldObject {
 	 * includes movement. Collision detection should not be done here.
 	 */
 	public abstract void onTick();
+	
+	/**
+	 * Get the Paint for this WorldObject.
+	 * 
+	 * @return a deep cloned instance of this WorldObjects paint.
+	 */
+	public abstract Paint getPaint();
+	
+	/**
+	 * Draws this WorldObject on the given canvas with its' Paint.
+	 * @param canvas
+	 */
+	public void paintWorldObject(Canvas canvas){
+		canvas.drawCircle((float) getX(), (float) getY(), (float) getRadius(), paint);
+	}
 	
 	/**
 	 * Moves towards the given position once with the given distance.
