@@ -1,11 +1,8 @@
 package se.kth.inda.indaprojekt;
 
-import se.kth.inda.indaprojekt.engine.Dimension;
 import se.kth.inda.indaprojekt.engine.Enemy;
 import se.kth.inda.indaprojekt.engine.GameEngine;
 import se.kth.inda.indaprojekt.engine.Level;
-import se.kth.inda.indaprojekt.engine.Spell;
-import se.kth.inda.indaprojekt.engine.Wizard;
 import se.kth.inda.indaprojekt.engine.WorldObject;
 import se.kth.inda.indaprojekt.engine.projectiles.ShockwaveBlast;
 import android.content.Context;
@@ -13,8 +10,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -28,7 +23,12 @@ import android.view.SurfaceView;
  */
 public class GameSurfaceView extends SurfaceView implements
 		SurfaceHolder.Callback {
-
+	
+	public interface OnSurfaceCreatedListener {
+		public GameEngine onSurfaceCreated(GameSurfaceView view);
+	}
+	
+	private OnSurfaceCreatedListener listener;
 	private SurfaceHolder surfaceHolder;
 
 	private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG); //Temp until worldObjects render themselves.
@@ -59,6 +59,10 @@ public class GameSurfaceView extends SurfaceView implements
 		thread.setRunning(true);
 		thread.start();
 	}
+	
+	public void setOnSurfaceCreatedListener(OnSurfaceCreatedListener l) {
+		listener = l;
+	}
 
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
@@ -68,16 +72,7 @@ public class GameSurfaceView extends SurfaceView implements
 	
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
-		if (engine != null) {
-			engine.setCurrentLevel(
-				GameEngine.createLevel(
-					new Dimension(
-						getWidth(),
-						getHeight()),
-					30));
-			
-			engine.run();
-		}
+		listener.onSurfaceCreated(this);
 	}
 
 	@Override
@@ -114,7 +109,6 @@ public class GameSurfaceView extends SurfaceView implements
 	 *            The canvas to draw to.
 	 */
 	public void drawStuff(Canvas canvas) {
-//		Log.d("GSW", "onDraw" + getHolder().getSurface().isValid());
 
 		Level level = engine.getCurrentLevel();
 		WorldObject[] objects = level.getWorldObjects(false);
@@ -140,15 +134,6 @@ public class GameSurfaceView extends SurfaceView implements
 					(float) wo.getRadius(), paint);
 		}
 	}
-	
-	/**
-	 * TODO Temporary input code.
-	 */
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		
-		return super.onTouchEvent(event);
-	}
 
 	/**
 	 * This is a simple thread that causes the view to be re-rendered. The
@@ -161,7 +146,6 @@ public class GameSurfaceView extends SurfaceView implements
 		/**
 		 * @return isRunning
 		 */
-		@SuppressWarnings("unused")
 		public synchronized boolean isRunning() {
 			return isRunning;
 		}
@@ -191,5 +175,24 @@ public class GameSurfaceView extends SurfaceView implements
 		}
 
 	}
-
+	
+	public void onResume() {
+		if(!thread.isRunning()) {
+			thread = new GameThread();
+			thread.setRunning(true);
+			thread.start();
+		}
+		engine.run();
+	}
+	
+	public void onPause() {
+		if(thread.isRunning()) {
+			try{ 
+				thread.setRunning(false);
+				thread.join();
+			} catch (InterruptedException e) {}
+			
+		}
+		engine.pause();
+	}
 }
