@@ -1,5 +1,7 @@
 package se.kth.inda.indaprojekt.engine;
 
+import android.util.Log;
+
 /**
  * A Projectile is a WorldObject that travels in a straight line 
  * towards and through its' target position. The Projectile will hit
@@ -35,7 +37,7 @@ public abstract class Projectile extends WorldObject implements UnitImpacter{
 		super(caster.getX(), caster.getY(), radius, 200);
 		this.caster = caster;
 		this.speed = speed;
-		angle = Math.atan2(yTarget-getX(),xTarget-getY());
+		angle = Math.atan2(yTarget-getY(),xTarget-getX());
 	}
 
 	@Override

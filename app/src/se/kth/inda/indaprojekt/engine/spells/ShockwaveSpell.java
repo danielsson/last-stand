@@ -8,10 +8,10 @@ import se.kth.inda.indaprojekt.engine.projectiles.ShockwaveBlast;
 
 public class ShockwaveSpell extends Spell{
 
-	private double radius = 25;
+	private double radius = 40;
 	private double knockbackForce = 8;
 	private int knockbackDuration = 40;
-	private double speed = 8;
+	private double speed = 14;
 	
 	public ShockwaveSpell(Level level) {
 		super(level);
