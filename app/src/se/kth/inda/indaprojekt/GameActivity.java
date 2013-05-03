@@ -5,6 +5,7 @@ import se.kth.inda.indaprojekt.engine.Dimension;
 import se.kth.inda.indaprojekt.engine.GameEngine;
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 
 /**
@@ -21,7 +22,7 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 	private GameEngine engine;
 	
 	private GameSurfaceView gameSurfaceView;
-	private GameGestureHandler gestureHandler = new GameGestureHandler();
+	private GestureDetector gestureHandler;
 	
 	
 	@Override
@@ -37,14 +38,13 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 		engine = new GameEngine(40);
 		
 		gameSurfaceView.setGameEngine(engine);
-		
+		gestureHandler = new GestureDetector(this, new GameGestureHandler(engine));
 		
 	}
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		gestureHandler.handle(event, engine, gameSurfaceView);
-		return super.onTouchEvent(event);
+		return gestureHandler.onTouchEvent(event);
 	}
 
 	@Override
