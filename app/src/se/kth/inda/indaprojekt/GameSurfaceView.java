@@ -32,8 +32,8 @@ public class GameSurfaceView extends SurfaceView implements
 	private SurfaceHolder surfaceHolder;
 
 	private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG); //Temp until worldObjects render themselves.
-	private GameEngine engine;
 	
+	private GameEngine engine;
 	private GameThread thread;
 
 	public GameSurfaceView(Context context, AttributeSet attr) {
@@ -85,19 +85,20 @@ public class GameSurfaceView extends SurfaceView implements
 
 	/**
 	 * Force redraw of the canvas. This method is thread safe.
+	 * Make sure that the surface is valid before this method is called.
 	 */
 	public void updateSurfaceView() {
 		Canvas canvas = null;
-
+		
 		try {
-			canvas = getHolder().lockCanvas();
+			canvas = surfaceHolder.lockCanvas();
 
 			synchronized (surfaceHolder) {
 				drawStuff(canvas);
 			}
 		} finally {
 			if (canvas != null)
-				getHolder().unlockCanvasAndPost(canvas);
+				surfaceHolder.unlockCanvasAndPost(canvas);
 		}
 	}
 
@@ -135,46 +136,6 @@ public class GameSurfaceView extends SurfaceView implements
 		}
 	}
 
-	/**
-	 * This is a simple thread that causes the view to be re-rendered. The
-	 * framerate is determined by android.
-	 */
-	private class GameThread extends Thread {
-
-		volatile boolean isRunning = false;
-
-		/**
-		 * @return isRunning
-		 */
-		public synchronized boolean isRunning() {
-			return isRunning;
-		}
-
-		/**
-		 * @param isRunning
-		 *            the isRunning to set
-		 */
-		public synchronized void setRunning(boolean isRunning) {
-			this.isRunning = isRunning;
-		}
-
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see java.lang.Thread#run()
-		 */
-		@Override
-		public void run() {
-			while (isRunning) {
-				try {
-					updateSurfaceView();
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-			}
-		}
-
-	}
 	
 	public void onResume() {
 		if(engine.getCurrentLevel() == null)
@@ -196,4 +157,55 @@ public class GameSurfaceView extends SurfaceView implements
 			
 		}
 	}
+	
+	/**
+	 * This is a simple thread that causes the view to be re-rendered. The
+	 * framerate is determined by android.
+	 */
+	private class GameThread extends Thread {
+		private static final String T_NAME = "GameRendererThread";
+		volatile boolean isRunning = false;
+		
+		public GameThread() {
+			setName(T_NAME);
+		}
+		/**
+		 * @return isRunning
+		 */
+		public synchronized boolean isRunning() {
+			return isRunning;
+		}
+
+		/**
+		 * @param isRunning
+		 *            the isRunning to set
+		 */
+		public synchronized void setRunning(boolean isRunning) {
+			this.isRunning = isRunning;
+		}
+
+		@Override
+		public void run() {
+			boolean knownValid = false; //Calling isValid is expensive.
+			while (isRunning) {
+				try {
+					if(!(knownValid || surfaceHolder.getSurface().isValid())) {
+						/* Profiling revealed that trying to render to a non-valid surface
+						 * wasted enough cycles to power a small manned flight to the moon.
+						 */
+						sleep(100);
+						continue;
+					}
+					
+					knownValid = true;
+					updateSurfaceView();
+					
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		}
+
+	}
+
 }
