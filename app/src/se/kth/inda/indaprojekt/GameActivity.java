@@ -1,13 +1,8 @@
 package se.kth.inda.indaprojekt;
 
-import java.util.Collections;
-
 import se.kth.inda.indaprojekt.GameSurfaceView.OnSurfaceCreatedListener;
 import se.kth.inda.indaprojekt.engine.Dimension;
 import se.kth.inda.indaprojekt.engine.GameEngine;
-import se.kth.inda.indaprojekt.engine.Level;
-import se.kth.inda.indaprojekt.engine.Spell;
-import se.kth.inda.indaprojekt.engine.Wizard;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -54,6 +49,9 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 
 	@Override
 	public GameEngine onSurfaceCreated(GameSurfaceView view) {
+		if(engine.getCurrentLevel() != null)
+			return engine;
+		
 		engine.setCurrentLevel(
 				GameEngine.createLevel(
 					new Dimension(
@@ -71,6 +69,7 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 	@Override
 	protected void onPause() {
 		if(gameSurfaceView != null) gameSurfaceView.onPause();
+		engine.pause();
 		super.onPause();
 	}
 
@@ -80,6 +79,7 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 	@Override
 	protected void onResume() {
 		if(gameSurfaceView != null) gameSurfaceView.onResume();
+		if(engine.getCurrentLevel() != null) engine.run();
 		super.onResume();
 	}
 
