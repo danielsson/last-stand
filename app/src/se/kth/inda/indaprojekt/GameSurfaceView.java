@@ -177,12 +177,14 @@ public class GameSurfaceView extends SurfaceView implements
 	}
 	
 	public void onResume() {
+		if(engine.getCurrentLevel() == null)
+			return; // The surface has never been started, so there is nothing to resume.
+		
 		if(!thread.isRunning()) {
 			thread = new GameThread();
 			thread.setRunning(true);
 			thread.start();
 		}
-		engine.run();
 	}
 	
 	public void onPause() {
@@ -193,6 +195,5 @@ public class GameSurfaceView extends SurfaceView implements
 			} catch (InterruptedException e) {}
 			
 		}
-		engine.pause();
 	}
 }

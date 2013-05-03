@@ -1,5 +1,7 @@
 package se.kth.inda.indaprojekt;
 
+import java.util.Collections;
+
 import se.kth.inda.indaprojekt.GameSurfaceView.OnSurfaceCreatedListener;
 import se.kth.inda.indaprojekt.engine.Dimension;
 import se.kth.inda.indaprojekt.engine.GameEngine;
@@ -23,7 +25,8 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 	 */
 	private GameEngine engine;
 	
-	GameSurfaceView gameSurfaceView;
+	private GameSurfaceView gameSurfaceView;
+	private GameGestureHandler gestureHandler = new GameGestureHandler();
 	
 	
 	@Override
@@ -45,14 +48,7 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		if(event.getAction() == MotionEvent.ACTION_DOWN){
-			Level level = engine.getCurrentLevel();
-			Wizard[] wizards = level.getWizards();
-			if(wizards.length > 0){
-				Spell[] spells = wizards[0].getSpellbook();
-				wizards[0].attemptToCastSpell(spells[2], event.getX(), event.getY());
-			}
-		}
+		gestureHandler.handle(event, engine, gameSurfaceView);
 		return super.onTouchEvent(event);
 	}
 
@@ -74,7 +70,7 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 	 */
 	@Override
 	protected void onPause() {
-		gameSurfaceView.onPause();
+		if(gameSurfaceView != null) gameSurfaceView.onPause();
 		super.onPause();
 	}
 
@@ -83,7 +79,7 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 	 */
 	@Override
 	protected void onResume() {
-		gameSurfaceView.onResume();
+		if(gameSurfaceView != null) gameSurfaceView.onResume();
 		super.onResume();
 	}
 
