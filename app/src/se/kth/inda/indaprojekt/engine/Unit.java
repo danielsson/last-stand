@@ -10,7 +10,7 @@ package se.kth.inda.indaprojekt.engine;
  */
 public abstract class Unit extends WorldObject{
 
-	private int health;
+	private int health, maxHealth;
 
 	/**
 	 * Creates a new Unit with drawPriority 0.
@@ -36,6 +36,7 @@ public abstract class Unit extends WorldObject{
 	public Unit(double x, double y, double radius, int health, int drawPriority) {
 		super(x, y, radius, drawPriority);
 		this.health = health;
+		this.maxHealth = health;
 	}
 	
 	/**
@@ -66,6 +67,15 @@ public abstract class Unit extends WorldObject{
 	 */
 	public int getHealth(){
 		return health;
+	}
+	
+	/**
+	 * The maximal health of the unit.
+	 * 
+	 * @return The maximal health of the unit.
+	 */
+	public int getMaxHealth(){
+		return maxHealth;
 	}
 
 }

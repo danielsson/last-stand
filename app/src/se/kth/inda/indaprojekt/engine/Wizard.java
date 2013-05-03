@@ -2,6 +2,9 @@ package se.kth.inda.indaprojekt.engine;
 
 import java.util.ArrayList;
 
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+
 public class Wizard extends Unit{
 		
 	private ArrayList<Spell> spells = new ArrayList<Spell>();
@@ -90,5 +93,22 @@ public class Wizard extends Unit{
 	 */
 	public int getMana(){
 		return (int)mana;
+	}
+	
+	/**
+	 * The maximal amount of mana. 
+	 * 
+	 * @return the maximal pool of mana.
+	 */
+	public int getMaxMana(){
+		return (int)maxMana;
+	}
+
+	@Override
+	public Paint getPaint() {
+		Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+		p.setARGB(255, 255, 255, 255);
+		p.setStyle(Style.FILL);
+		return p;
 	}
 }

@@ -3,6 +3,7 @@ package se.kth.inda.indaprojekt;
 import se.kth.inda.indaprojekt.engine.Enemy;
 import se.kth.inda.indaprojekt.engine.GameEngine;
 import se.kth.inda.indaprojekt.engine.Level;
+import se.kth.inda.indaprojekt.engine.Wizard;
 import se.kth.inda.indaprojekt.engine.WorldObject;
 import se.kth.inda.indaprojekt.engine.projectiles.ShockwaveBlast;
 import android.content.Context;
@@ -31,7 +32,9 @@ public class GameSurfaceView extends SurfaceView implements
 	private OnSurfaceCreatedListener listener;
 	private SurfaceHolder surfaceHolder;
 
-	private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG); //Temp until worldObjects render themselves.
+	//TODO temp until background is made
+	private Paint background = new Paint(Paint.ANTI_ALIAS_FLAG);
+	
 	private GameEngine engine;
 	
 	private GameThread thread;
@@ -39,6 +42,7 @@ public class GameSurfaceView extends SurfaceView implements
 	public GameSurfaceView(Context context, AttributeSet attr) {
 		super(context, attr);
 
+		background.setARGB(30, 0, 0, 0);
 		surfaceHolder = getHolder();
 		surfaceHolder.addCallback(this);
 
@@ -114,25 +118,30 @@ public class GameSurfaceView extends SurfaceView implements
 		WorldObject[] objects = level.getWorldObjects(false);
 
 		// Flush
-		paint.setARGB(30, 0, 0, 0);
-		canvas.drawPaint(paint);
+		//TODO Tmp until background added
+		canvas.drawPaint(background);
 
 		// render objects
-		paint.setStyle(Style.STROKE);
-		paint.setStrokeWidth(12);
 		for (WorldObject wo : objects) {
-			if(wo instanceof ShockwaveBlast){
-				paint.setARGB(225, 0, 0, 255);
-			}
-			else if(wo instanceof Enemy){
-				paint.setARGB(255, 255, 0, 0);
-			}
-			else{
-				paint.setARGB(255, 255, 255, 255);
-			}
-			canvas.drawCircle((float) wo.getX(), (float) wo.getY(),
-					(float) wo.getRadius(), paint);
+			wo.paintWorldObject(canvas);
 		}
+		
+		//Render health and mana Bar
+		Wizard z = level.getWizards()[0];
+		Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+		p.setARGB(255,75,0,0);
+		p.setStyle(Style.FILL);
+		
+		int yHeight = getHeight()-50;
+		int xMiddle = getWidth()/2;
+		canvas.drawRect(0, yHeight, xMiddle, getHeight(), p);
+		p.setARGB(255,255,0,0);
+		canvas.drawRect(0, yHeight, (float) (xMiddle/((double)(z.getHealth())/z.getMaxHealth())), getHeight(), p);
+		
+		p.setARGB(255,0,0,75);
+		canvas.drawRect(xMiddle, yHeight, getWidth(), getHeight(), p);
+		p.setARGB(255,0,0,255);
+		canvas.drawRect((float) (getWidth()-xMiddle*((double)(z.getMana())/z.getMaxMana())), yHeight, getWidth(), getHeight(), p);
 	}
 
 	/**
