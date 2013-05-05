@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
+import android.widget.LinearLayout;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -24,22 +25,24 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 	private GameSurfaceView gameSurfaceView;
 	private GestureDetector gestureHandler;
 	
+	private LinearLayout upgradesView;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		
 		setContentView(R.layout.activity_fullscreen);
 		
 		gameSurfaceView = (GameSurfaceView) findViewById(R.id.fullscreen_content2);
 		gameSurfaceView.setOnSurfaceCreatedListener(this);
 		
+		upgradesView = (LinearLayout) findViewById(R.id.upgradeLayout);
+		
 		engine = new GameEngine(40);
 		
 		gameSurfaceView.setGameEngine(engine);
 		gestureHandler = new GestureDetector(this, new GameGestureHandler(engine));
-		
 	}
 	
 	@Override
