@@ -39,7 +39,8 @@ public class GameGestureHandler extends SimpleOnGestureListener {
 		}
 		return super.onDoubleTap(event);
 	}
-
+	
+	/** Send knockback in the specified direction. */
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 			float velocityY) {
@@ -48,12 +49,12 @@ public class GameGestureHandler extends SimpleOnGestureListener {
 		if (wizards.length > 0) {
 			Spell[] spells = wizards[0].getSpellbook();
 			wizards[0]
-					.attemptToCastSpell(spells[0], e2.getX(), e2.getY());
+					.attemptToCastSpell(spells[2], e2.getX(), e2.getY());
 		}
 		return super.onFling(e1, e2, velocityX, velocityY);
 	}
 
-	/** Send knockback in the specified direction. */
+	/** Send fireball */
 	@Override
 	public boolean onSingleTapConfirmed(MotionEvent event) {
 		Level level = engine.getCurrentLevel();
@@ -61,7 +62,7 @@ public class GameGestureHandler extends SimpleOnGestureListener {
 		if (wizards.length > 0) {
 			Spell[] spells = wizards[0].getSpellbook();
 			wizards[0]
-					.attemptToCastSpell(spells[2], event.getX(), event.getY());
+					.attemptToCastSpell(spells[0], event.getX(), event.getY());
 		}
 		return super.onSingleTapConfirmed(event);
 	}
