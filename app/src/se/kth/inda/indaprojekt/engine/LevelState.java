@@ -5,13 +5,13 @@ public enum LevelState {
 	/**
 	 * The Level has been created and hasn't been affected by any input.
 	 */
-	UNMODIFIED(),
+	UNMODIFIED,
 	
 	/**
 	 * The Level has been modified by input and is considered
 	 * active running.
 	 */
-	RUNNING(),
+	RUNNING,
 	
 	/**
 	 * The Level has reached the conditions to make the player(s) victorious.
@@ -21,7 +21,7 @@ public enum LevelState {
 	/**
 	 * The Level has reached the conditions for failure.
 	 */
-	GAMEOVER();
+	GAMEOVER;
 	
 	
 }
