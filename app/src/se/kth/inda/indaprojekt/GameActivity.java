@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -25,8 +26,7 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 	private GameSurfaceView gameSurfaceView;
 	private GestureDetector gestureHandler;
 	
-	private LinearLayout upgradesView;
-	
+	private LinearLayout upgradeView;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 		gameSurfaceView = (GameSurfaceView) findViewById(R.id.fullscreen_content2);
 		gameSurfaceView.setOnSurfaceCreatedListener(this);
 		
-		upgradesView = (LinearLayout) findViewById(R.id.upgradeLayout);
+		upgradeView = (LinearLayout) findViewById(R.id.upgradeLayout);
 		
 		engine = new GameEngine(40);
 		
@@ -66,9 +66,6 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 		return engine;
 	}
 
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onPause()
-	 */
 	@Override
 	protected void onPause() {
 		if(gameSurfaceView != null) gameSurfaceView.onPause();
@@ -76,14 +73,20 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 		super.onPause();
 	}
 
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onResume()
-	 */
 	@Override
 	protected void onResume() {
 		if(gameSurfaceView != null) gameSurfaceView.onResume();
 		if(engine.getCurrentLevel() != null) engine.run();
 		super.onResume();
+	}
+	
+	public void displayUpgradeView() {
+		upgradeView.setVisibility(LinearLayout.VISIBLE);
+		TextView txtNumPoints = (TextView) upgradeView.findViewById(R.id.txtNumPoints);
+		txtNumPoints.setText(
+				String.format(getResources().getString(R.string.num_points), 55)
+			);
+		
 	}
 
 }
