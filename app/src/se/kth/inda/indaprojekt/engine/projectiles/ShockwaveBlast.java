@@ -2,13 +2,11 @@ package se.kth.inda.indaprojekt.engine.projectiles;
 
 import java.util.LinkedList;
 
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Paint.Style;
-
 import se.kth.inda.indaprojekt.engine.Projectile;
 import se.kth.inda.indaprojekt.engine.Unit;
 import se.kth.inda.indaprojekt.engine.WorldObject;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
 
 
 public class ShockwaveBlast extends Projectile{
