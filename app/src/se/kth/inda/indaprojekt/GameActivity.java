@@ -4,9 +4,15 @@ import se.kth.inda.indaprojekt.GameSurfaceView.OnSurfaceCreatedListener;
 import se.kth.inda.indaprojekt.engine.Dimension;
 import se.kth.inda.indaprojekt.engine.GameEngine;
 import se.kth.inda.indaprojekt.engine.Level;
+import se.kth.inda.indaprojekt.engine.Spell;
+import se.kth.inda.indaprojekt.engine.Wizard;
 import se.kth.inda.indaprojekt.engine.GameEngine.GameEngineEventListener;
+import se.kth.inda.indaprojekt.engine.spells.FireBall;
+import se.kth.inda.indaprojekt.engine.spells.ShockwaveSpell;
+import se.kth.inda.indaprojekt.engine.spells.TeleportSpell;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.LinearLayout;
@@ -25,8 +31,11 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 	
 	private GameSurfaceView gameSurfaceView;
 	private GestureDetector gestureHandler;
+	private GameGestureHandler gameGestureHandler;
 	
 	private LinearLayout upgradeView;
+	
+	private LevelProgressHandler levelHandler;
 	
 	/**
 	 * This handles all gamecycle events from the game engine. That is, victory
@@ -40,7 +49,12 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 				
 				@Override
 				public void run() {
-					displayUpgradeView();
+					if(levelHandler.hasNextLevel()){
+						levelHandler.moveToNextLevel();
+						initiateNextLevel();
+					}
+					else
+						displayUpgradeView();
 				}
 			});
 		}
@@ -76,7 +90,8 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 		engine = new GameEngine(40, gameEventListener);
 		
 		gameSurfaceView.setGameEngine(engine);
-		gestureHandler = new GestureDetector(this, new GameGestureHandler(engine));
+		gameGestureHandler = new GameGestureHandler();
+		gestureHandler = new GestureDetector(this, gameGestureHandler);
 	}
 	
 	@Override
@@ -89,14 +104,10 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 		if(engine.getCurrentLevel() != null)
 			return engine;
 		
-		engine.setCurrentLevel(
-				GameEngine.createLevel(
-					new Dimension(
-						view.getWidth(),
-						view.getHeight()),
-					30));
-			
-		engine.run();
+		levelHandler = new LevelProgressHandler(new Dimension(view.getWidth(),view.getHeight()), 30, 5);
+		
+		initiateNextLevel();
+		
 		return engine;
 	}
 
@@ -109,8 +120,10 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 
 	@Override
 	protected void onResume() {
-		if(gameSurfaceView != null) gameSurfaceView.onResume();
-		if(engine.getCurrentLevel() != null) engine.run();
+		if(gameSurfaceView != null)
+			gameSurfaceView.onResume();
+		if(engine.getCurrentLevel() != null) 
+			engine.run();
 		super.onResume();
 	}
 	
@@ -121,7 +134,17 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 		txtNumPoints.setText(
 				String.format(getResources().getString(R.string.num_points), 55)
 			);
+	}
+	
+	public void initiateNextLevel(){
 		
+		Wizard w = levelHandler.addWizard();
+		Level l = levelHandler.getLevel();
+		gameGestureHandler.setWizard(w);
+		
+		engine.setCurrentLevel(l);
+		
+		onResume();
 	}
 
 }

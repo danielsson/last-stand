@@ -31,6 +31,8 @@ public class Level {
 	private ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
 	private ArrayList<UnitImpacter> unitImpacters = new ArrayList<UnitImpacter>();
 	
+	private LevelSpawner spawn;
+	
 	/**
 	 * Creates an new Level with the given size. The size cannot be
 	 * changed once the Level has been created. A Level is a plain 
@@ -38,8 +40,9 @@ public class Level {
 	 * 
 	 * @param size The Size of the Level.
 	 */
-	public Level(Dimension size){
+	public Level(Dimension size, LevelSpawner spawner){
 		this.size = size;
+		spawn = spawner;
 	}
 	
 	/**
@@ -90,8 +93,12 @@ public class Level {
 			units.add((Unit) o);
 			if(o instanceof Wizard)
 				wizards.add((Wizard) o);
-			else if(o instanceof Enemy)
-				enemies.add((Enemy) o);
+			else if(o instanceof Enemy){
+				Enemy e = (Enemy) o;
+				if(!wizards.isEmpty())
+					e.setTarget(wizards.get(0));
+				enemies.add(e);
+			}
 		}
 		else if(o instanceof Projectile)
 			projectiles.add((Projectile) o);
@@ -146,11 +153,11 @@ public class Level {
 	 * all defined tick effects on all WorldObjects, check for
 	 * collision and apply onImpactEffects for all colliding Projectiles.
 	 * 
-	 * NOTE: levelTick is NOT thread-safe and should NOT be called by multiple
-	 * threads. This may have a catastrophic effects on the Level - a crash or
-	 * strange bugs may occur.
 	 */
-	public void levelTick(){
+	public synchronized void levelTick(){
+		
+		spawn.checkSpawning(this);
+		
 		
 		/*
 		 * Adds or removes the tagged WorldObjects from the game.
@@ -226,10 +233,15 @@ public class Level {
 			}
 		}
 		
-		for (int i = 0; i < enemies.size(); i++) {
-			if(!enemies.get(i).isDead()){
-				victory = false;
-				break;
+		if (!spawn.spawningDone())
+			victory = false;
+		
+		else{
+			for (int i = 0; i < enemies.size(); i++) {
+				if(!enemies.get(i).isDead()){
+					victory = false;
+					break;
+				}
 			}
 		}
 		

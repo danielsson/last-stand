@@ -58,32 +58,6 @@ public class GameEngine {
 	}
 
 	/**
-	 * TODO DOC + CODE
-	 * 
-	 * @param d
-	 * @param enemies
-	 * @return
-	 */
-	public static Level createLevel(Dimension d, int enemies) {
-		Level l = new Level(d);
-
-		Spell[] spells = new Spell[3];
-		spells[0] = new FireBall(l, 8.5);
-		spells[1] = new TeleportSpell(l);
-		spells[2] = new ShockwaveSpell(l);
-		Wizard w = new Wizard(d.getWidth() / 2, d.getHeight() / 2, 20, 10,
-				spells, 10, 0.075);
-		l.addWorldObject(w);
-
-		for (int i = 0; i < enemies; i++) {
-			l.addWorldObject(new Enemy((d.getWidth() / enemies) * (i + 1), -15,
-					10, 5, 2, w));
-		}
-
-		return l;
-	}
-
-	/**
 	 * Executes what the GameEngine is supposed to do upon the current Level
 	 * ends in victory.
 	 */

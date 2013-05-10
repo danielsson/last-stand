@@ -16,27 +16,17 @@ import android.view.MotionEvent;
  */
 public class GameGestureHandler extends SimpleOnGestureListener {
 
-	private final GameEngine engine;
-
-	/**
-	 * @param e
-	 *            The {@link GameEngine} to relay events to.
-	 */
-	public GameGestureHandler(GameEngine e) {
-		engine = e;
-		
+	private Wizard wizard;
+	
+	public void setWizard(Wizard w){
+		wizard = w;
 	}
 
 	/** Teleport the wizard to the doubletapped location. */
 	@Override
 	public boolean onDoubleTap(MotionEvent event) {
-		Level level = engine.getCurrentLevel();
-		Wizard[] wizards = level.getWizards();
-		if (wizards.length > 0) {
-			Spell[] spells = wizards[0].getSpellbook();
-			wizards[0]
-					.attemptToCastSpell(spells[1], event.getX(), event.getY());
-		}
+		castSpell(1 , event.getX(), event.getY());
+
 		return super.onDoubleTap(event);
 	}
 	
@@ -44,27 +34,26 @@ public class GameGestureHandler extends SimpleOnGestureListener {
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 			float velocityY) {
-		Level level = engine.getCurrentLevel();
-		Wizard[] wizards = level.getWizards();
-		if (wizards.length > 0) {
-			Spell[] spells = wizards[0].getSpellbook();
-			wizards[0]
-					.attemptToCastSpell(spells[2], e2.getX(), e2.getY());
-		}
+		castSpell(2 , e2.getX(), e2.getY());
+		
 		return super.onFling(e1, e2, velocityX, velocityY);
 	}
 
 	/** Send fireball */
 	@Override
 	public boolean onSingleTapConfirmed(MotionEvent event) {
-		Level level = engine.getCurrentLevel();
-		Wizard[] wizards = level.getWizards();
-		if (wizards.length > 0) {
-			Spell[] spells = wizards[0].getSpellbook();
-			wizards[0]
-					.attemptToCastSpell(spells[0], event.getX(), event.getY());
-		}
+		castSpell(0 , event.getX(), event.getY());
+		
 		return super.onSingleTapConfirmed(event);
+	}
+	
+	private void castSpell(int index, float x, float y){
+		if(wizard != null){
+			if (!wizard.isDead()) {
+				Spell[] spells = wizard.getSpellbook();
+				wizard.attemptToCastSpell(spells[index], x, y);
+			}
+		}
 	}
 
 }
