@@ -3,18 +3,18 @@ package se.kth.inda.indaprojekt;
 import se.kth.inda.indaprojekt.GameSurfaceView.OnSurfaceCreatedListener;
 import se.kth.inda.indaprojekt.engine.Dimension;
 import se.kth.inda.indaprojekt.engine.GameEngine;
+import se.kth.inda.indaprojekt.engine.Level;
+import se.kth.inda.indaprojekt.engine.GameEngine.GameEngineEventListener;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- * 
- * @see SystemUiHider
+ * An activity that runs a gameengine and renders it using a {@link GameSurfaceView}.
  */
 public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 	
@@ -28,6 +28,40 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 	
 	private LinearLayout upgradeView;
 	
+	/**
+	 * This handles all gamecycle events from the game engine. That is, victory
+	 * and failure.
+	 */
+	GameEngineEventListener gameEventListener = new GameEngineEventListener() {
+		
+		@Override
+		public void onLevelVictory(Level level) {
+			runOnUiThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					displayUpgradeView();
+				}
+			});
+		}
+		
+		@Override
+		public void onLevelLost(Level level) {
+			runOnUiThread(new Runnable() {
+				
+				@Override
+				public void run() {
+					Toast.makeText(GameActivity.this, "Fail", Toast.LENGTH_LONG).show();
+				}
+			});
+		}
+		
+		@Override
+		public void onLevelCreated(Level level) {
+			// PASS
+		}
+	};
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,7 +73,7 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 		
 		upgradeView = (LinearLayout) findViewById(R.id.upgradeLayout);
 		
-		engine = new GameEngine(40);
+		engine = new GameEngine(40, gameEventListener);
 		
 		gameSurfaceView.setGameEngine(engine);
 		gestureHandler = new GestureDetector(this, new GameGestureHandler(engine));
@@ -82,6 +116,7 @@ public class GameActivity extends Activity implements OnSurfaceCreatedListener {
 	
 	public void displayUpgradeView() {
 		upgradeView.setVisibility(LinearLayout.VISIBLE);
+
 		TextView txtNumPoints = (TextView) upgradeView.findViewById(R.id.txtNumPoints);
 		txtNumPoints.setText(
 				String.format(getResources().getString(R.string.num_points), 55)
