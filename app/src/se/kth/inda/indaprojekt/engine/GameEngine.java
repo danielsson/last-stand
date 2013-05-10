@@ -4,14 +4,33 @@ import se.kth.inda.indaprojekt.engine.spells.FireBall;
 import se.kth.inda.indaprojekt.engine.spells.ShockwaveSpell;
 import se.kth.inda.indaprojekt.engine.spells.TeleportSpell;
 
+//TODO: DOC
 public class GameEngine {
+	/**
+	 * Interface definition for a callback to be invoked when
+	 * en event has taken place in the engine.
+	 */
+	public interface GameEngineEventListener {
+		/**
+		 * Called after a level has been set.
+		 * @param level The level that was set.
+		 */
+		public void onLevelCreated(Level level);
+		
+		public void onLevelVictory(Level level);
+		public void onLevelLost(Level level);
+		
+	}
 
 	// The level the gameTicker will affect.
 	private Level currentLevel;
 
 	// The timer that runs the se.kth.inda.indaprojekt.engine.
 	private GameTicker gameTicker;
-
+	
+	//The gameeventlistener currently registered.
+	private GameEngineEventListener listener;
+	
 	/**
 	 * Creates a GameEngine that progresses Levels forward with the given amount
 	 * of ticks per second.
@@ -22,6 +41,20 @@ public class GameEngine {
 	 */
 	public GameEngine(int ticksPerSecond) {
 		gameTicker = new GameTicker(1000 / ticksPerSecond);
+	}
+	
+	/**
+	 * Creates a GameEngine that progresses Levels forward with the given amount
+	 * of ticks per second.
+	 * 
+	 * @param ticksPerSecond
+	 *            How many times the Level is supposed to tick per second while
+	 *            this GameEngine is active.
+	 * @param l A {@link GameEngineEventListener} to recieve callbacks.
+	 */
+	public GameEngine(int ticksPerSecond, GameEngineEventListener l) {
+		this(ticksPerSecond);
+		listener = l;
 	}
 
 	/**
@@ -56,7 +89,9 @@ public class GameEngine {
 	 */
 	private void onLevelVictory() {
 		gameTicker.stop();
-		// TODO
+		
+		if(listener != null)
+			listener.onLevelVictory(getCurrentLevel());
 	}
 
 	/**
@@ -65,8 +100,9 @@ public class GameEngine {
 	 */
 	private void onLevelLost() {
 		gameTicker.stop();
-		// TODO
-
+		
+		if(listener != null)
+			listener.onLevelLost(getCurrentLevel());
 	}
 
 	/**
@@ -105,6 +141,9 @@ public class GameEngine {
 	 */
 	public void setCurrentLevel(Level l) {
 		currentLevel = l;
+		
+		if(listener != null)
+			listener.onLevelCreated(getCurrentLevel());
 	}
 
 	/**
