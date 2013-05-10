@@ -17,6 +17,9 @@ public class Level {
 	private Dimension size;
 	private Stack<WorldObjectQueueElement> queue = new Stack<WorldObjectQueueElement>();
 	
+	//A ticker used for rate-limiting of expensive operations.
+	private byte ticker = 0;
+	
 	// These ArrayLists stores all the objects in the Level. The same WorldObject
 	// may be stored in multiple arrays and adding and removing is  therefore STRICLY
 	// CONFINED to the master<Add/Remove>WorldObject(WorldObject o) in order to keep
@@ -206,8 +209,10 @@ public class Level {
 		}
 		
 		//Check conditions for the state of the level and change accordingly if needed.
-//		updateState();
+		if(ticker % 10 == 0) //Rate limited.
+			updateState();
 		
+		ticker++;
 	}
 	
 	private boolean updateState(){
@@ -321,7 +326,7 @@ public class Level {
 		/**
 		 * The WorldObject is supposed to be added to the Level 
 		 */
-		ADD(),
+		ADD,
 		
 		/**
 		 * The WorldObject is supposed to be removed from the Level
