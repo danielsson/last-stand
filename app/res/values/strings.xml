@@ -9,9 +9,11 @@
     
     <string name="teleport_spell">Teleport</string>
     <string name="teleport_spell_desc">Enables you to teleport your wizard by doubletapping.</string>
+    <string name="teleport_spell_cost">400</string>
     
     <string name="push_spell">Force push</string>
     <string name="push_spell_desc">Enables you to push enemies away by swiping the screen.</string>
+    <string name="push_spell_cost">100</string>
         
 
 </resources>
