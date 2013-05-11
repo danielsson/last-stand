@@ -6,8 +6,7 @@
     <se.kth.inda.indaprojekt.GameSurfaceView
         android:id="@+id/fullscreen_content2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible" />
+        android:layout_height="match_parent" />
 
     <se.kth.inda.indaprojekt.UpgradeView
         android:id="@+id/upgradeLayout"
@@ -18,6 +17,16 @@
         android:orientation="vertical"
         android:padding="20dp"
         android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="@string/lvl_completed"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="30sp"
+            android:textStyle="italic" />
 
         <TextView
             android:id="@+id/textView1"
@@ -78,7 +87,6 @@
                 android:layout_alignParentRight="true"
                 android:text="@string/push_spell_cost"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
-
         </RelativeLayout>
 
         <RelativeLayout
@@ -129,6 +137,17 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </RelativeLayout>
 
+        <TextView
+            android:id="@+id/txtSkip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="40dp"
+            android:layout_weight="0.08"
+            android:gravity="center"
+            android:text="@string/skip_upgrade"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="15sp" />
     </se.kth.inda.indaprojekt.UpgradeView>
 
 </FrameLayout>

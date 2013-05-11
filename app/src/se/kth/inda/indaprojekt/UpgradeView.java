@@ -30,6 +30,7 @@ class UpgradeView extends LinearLayout {
 	private RelativeLayout btnForcePush;
 	private RelativeLayout btnTeleport;
 	private TextView txtPoints;
+	private TextView txtSkip;
 
 	private OnClickListener onClickListener = new OnClickListener() {
 
@@ -46,6 +47,8 @@ class UpgradeView extends LinearLayout {
 					levelhandler.setHasTeleportUpgrade(true);
 					upgradedListener.onUpgraded();
 				}
+			} else { //Skip
+				upgradedListener.onUpgraded();
 			}
 
 		}
@@ -65,9 +68,11 @@ class UpgradeView extends LinearLayout {
 		btnForcePush = (RelativeLayout) findViewById(R.id.btnForcePush);
 		btnTeleport = (RelativeLayout) findViewById(R.id.btnTeleport);
 		txtPoints = (TextView) findViewById(R.id.txtNumPoints);
+		txtSkip = (TextView) findViewById(R.id.txtSkip);
 
 		btnForcePush.setOnClickListener(onClickListener);
 		btnTeleport.setOnClickListener(onClickListener);
+		txtSkip.setOnClickListener(onClickListener);
 
 		upgradedListener = l;
 	}

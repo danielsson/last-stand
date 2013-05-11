@@ -6,6 +6,7 @@
     <string name="choose_upgrades">Select upgrades</string>
     <string name="num_points">Points: %1$d</string>
     <string name="game_over">Game Over!</string>
+    <string name="lvl_completed">Level Completed!</string>
     
     
     <string name="teleport_spell">Teleport</string>
@@ -15,6 +16,8 @@
     <string name="push_spell">Force push</string>
     <string name="push_spell_desc">Enables you to push enemies away by swiping the screen.</string>
     <string name="push_spell_cost">100</string>
+    
+    <string name="skip_upgrade">Skip</string>
         
 
 </resources>
