@@ -1,5 +1,7 @@
 package se.kth.inda.indaprojekt.engine;
 
+import se.kth.inda.indaprojekt.engine.spells.SpellType;
+
 /**
  * A Spell is an non-material object that is casted by Wizards and 
  * affects a Level. A Spell has a mana cost that defines how much
@@ -44,4 +46,9 @@ public abstract class Spell {
 		return level;
 	}
 	
+	/**
+	 * @return The type of spell this is.
+	 */
+	public abstract SpellType getType();
+
 }

@@ -28,4 +28,9 @@ public class ShockwaveSpell extends Spell{
 		getLevel().addWorldObject(p);
 	}
 
+	@Override
+	public SpellType getType() {
+		return SpellType.SHOCKWAVE;
+	}
+
 }

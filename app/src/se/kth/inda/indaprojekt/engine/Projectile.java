@@ -1,6 +1,5 @@
 package se.kth.inda.indaprojekt.engine;
 
-import android.util.Log;
 
 /**
  * A Projectile is a WorldObject that travels in a straight line 

@@ -1,6 +1,5 @@
 package se.kth.inda.indaprojekt.engine;
 
-import android.util.Log;
 
 public abstract class LevelSpawner {
 	

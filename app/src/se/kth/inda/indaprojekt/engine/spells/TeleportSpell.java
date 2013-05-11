@@ -20,4 +20,9 @@ public class TeleportSpell extends Spell{
 		source.teleportTo(x, y);
 	}
 
+	@Override
+	public SpellType getType() {
+		return SpellType.TELEPORT;
+	}
+
 }

@@ -1,8 +1,5 @@
 package se.kth.inda.indaprojekt.engine;
 
-import se.kth.inda.indaprojekt.engine.spells.FireBall;
-import se.kth.inda.indaprojekt.engine.spells.ShockwaveSpell;
-import se.kth.inda.indaprojekt.engine.spells.TeleportSpell;
 
 //TODO: DOC
 public class GameEngine {

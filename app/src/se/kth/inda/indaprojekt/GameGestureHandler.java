@@ -1,9 +1,7 @@
 package se.kth.inda.indaprojekt;
 
-import java.util.List;
-
-import se.kth.inda.indaprojekt.engine.Spell;
 import se.kth.inda.indaprojekt.engine.Wizard;
+import se.kth.inda.indaprojekt.engine.spells.SpellType;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 
@@ -25,16 +23,16 @@ public class GameGestureHandler extends SimpleOnGestureListener {
 	/** Teleport the wizard to the doubletapped location. */
 	@Override
 	public boolean onDoubleTap(MotionEvent event) {
-		castSpell(1 , event.getX(), event.getY());
+		castSpell(SpellType.TELEPORT, event.getX(), event.getY());
 
 		return super.onDoubleTap(event);
 	}
 	
-	/** Send knockback in the specified direction. */
+	/** Send chockwave in the specified direction. */
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 			float velocityY) {
-		castSpell(2 , e2.getX(), e2.getY());
+		castSpell(SpellType.SHOCKWAVE, e2.getX(), e2.getY());
 		
 		return super.onFling(e1, e2, velocityX, velocityY);
 	}
@@ -42,17 +40,15 @@ public class GameGestureHandler extends SimpleOnGestureListener {
 	/** Send fireball */
 	@Override
 	public boolean onSingleTapConfirmed(MotionEvent event) {
-		castSpell(0 , event.getX(), event.getY());
+		castSpell(SpellType.FIREBALL, event.getX(), event.getY());
 		
 		return super.onSingleTapConfirmed(event);
 	}
 	
-	private void castSpell(int index, float x, float y){
+	private void castSpell(SpellType type, float x, float y){
 		if(wizard != null){
 			if (!wizard.isDead()) {
-				List<Spell> spells = wizard.getSpellbook();
-				if(index < spells.size())
-					wizard.attemptToCastSpell(spells.get(index), x, y);
+				wizard.attemptToCastSpell(type, x, y);
 			}
 		}
 	}

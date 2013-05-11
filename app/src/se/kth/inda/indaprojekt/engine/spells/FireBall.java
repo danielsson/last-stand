@@ -38,4 +38,9 @@ public class FireBall extends Spell{
 		
 	}
 
+	@Override
+	public SpellType getType() {
+		return SpellType.FIREBALL;
+	}
+
 }

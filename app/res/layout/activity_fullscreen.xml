@@ -47,24 +47,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp" >
 
-            <ImageView
-                android:id="@+id/ImageView01"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_margin="5dp"
-                android:src="@drawable/ic_launcher" />
-
             <TextView
                 android:id="@+id/TextView02"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
                 android:layout_toLeftOf="@+id/textView4"
-                android:layout_toRightOf="@+id/ImageView01"
                 android:text="@string/push_spell"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -72,7 +62,7 @@
                 android:id="@+id/TextView01"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/TextView02"
+                android:layout_alignParentLeft="true"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/TextView02"
                 android:text="@string/push_spell_desc"
@@ -95,24 +85,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp" >
 
-            <ImageView
-                android:id="@+id/ImageView02"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_margin="5dp"
-                android:src="@drawable/ic_launcher" />
-
             <TextView
                 android:id="@+id/TextView04"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
                 android:layout_toLeftOf="@+id/TextView03"
-                android:layout_toRightOf="@+id/ImageView02"
                 android:text="@string/teleport_spell"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 

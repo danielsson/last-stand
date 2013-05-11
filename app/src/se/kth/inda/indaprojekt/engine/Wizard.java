@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import se.kth.inda.indaprojekt.engine.spells.SpellType;
+
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 
@@ -49,8 +51,9 @@ public class Wizard extends Unit{
 	 * @param y The y-position the spell was called upon.
 	 * @return True if the spell fulfilled the criteria to be casted, false otherwise.
 	 */
-	public boolean attemptToCastSpell(Spell spell, double x, double y){
-		if(spells.contains(spell)){
+	public boolean attemptToCastSpell(SpellType type, double x, double y){
+		Spell spell = getSpellByType(type);
+		if(spell != null){
 			if(getMana() >= spell.getManaCost()){
 				mana-=spell.getManaCost();
 				spell.executeSpell(this, x, y);
@@ -77,6 +80,20 @@ public class Wizard extends Unit{
 	public void addSpell(Spell spell){
 		if(!spells.contains(spell))
 			spells.add(spell);
+	}
+	
+	/**
+	 * Get a registered spell by its type.
+	 * @param type The type to search for.
+	 * @return The spell or null if not found.
+	 */
+	public Spell getSpellByType(SpellType type) {
+		for(Spell s : spells) {
+			if(type.equals(s.getType()))
+				return s;
+		}
+		
+		return null;
 	}
 
 	/**
