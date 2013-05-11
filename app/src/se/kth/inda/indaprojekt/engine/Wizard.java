@@ -1,6 +1,8 @@
 package se.kth.inda.indaprojekt.engine;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
@@ -25,8 +27,9 @@ public class Wizard extends Unit{
 	 */
 	public Wizard(double x, double y, double radius, int health, Spell[] spells, int mana, double manaRegen) {
 		super(x, y, radius, health, 150);
-		for (int i = 0; i < spells.length; i++) {
-			this.spells.add(spells[i]);
+		for(Spell s : spells) {
+			if(s != null)
+				this.spells.add(s);
 		}
 		maxMana = mana;
 		this.mana = maxMana;
@@ -82,8 +85,8 @@ public class Wizard extends Unit{
 	 * 
 	 * @return The Spells the Wizard may use.
 	 */
-	public Spell[] getSpellbook(){
-		return spells.toArray(new Spell[0]);
+	public List<Spell> getSpellbook(){
+		return Collections.unmodifiableList(spells);
 	}
 	
 	/**

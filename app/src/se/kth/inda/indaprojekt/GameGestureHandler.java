@@ -1,7 +1,7 @@
 package se.kth.inda.indaprojekt;
 
-import se.kth.inda.indaprojekt.engine.GameEngine;
-import se.kth.inda.indaprojekt.engine.Level;
+import java.util.List;
+
 import se.kth.inda.indaprojekt.engine.Spell;
 import se.kth.inda.indaprojekt.engine.Wizard;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -50,8 +50,9 @@ public class GameGestureHandler extends SimpleOnGestureListener {
 	private void castSpell(int index, float x, float y){
 		if(wizard != null){
 			if (!wizard.isDead()) {
-				Spell[] spells = wizard.getSpellbook();
-				wizard.attemptToCastSpell(spells[index], x, y);
+				List<Spell> spells = wizard.getSpellbook();
+				if(index < spells.size())
+					wizard.attemptToCastSpell(spells.get(index), x, y);
 			}
 		}
 	}
