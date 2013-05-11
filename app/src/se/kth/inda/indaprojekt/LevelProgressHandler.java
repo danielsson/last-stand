@@ -2,8 +2,6 @@ package se.kth.inda.indaprojekt;
 
 import java.util.Random;
 
-import android.util.Log;
-
 import se.kth.inda.indaprojekt.engine.Dimension;
 import se.kth.inda.indaprojekt.engine.Enemy;
 import se.kth.inda.indaprojekt.engine.Level;
@@ -18,7 +16,7 @@ public class LevelProgressHandler {
 	
 	private Level[] levels;
 	private int currentLevel = 0;
-	
+
 	//This is crude. A true upgrade system should be implemented
 	//in the future.
 	private boolean hasForcePushUpgrade = false;
