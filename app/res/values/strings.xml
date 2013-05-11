@@ -5,6 +5,7 @@
     
     <string name="choose_upgrades">Select upgrades</string>
     <string name="num_points">Points: %1$d</string>
+    <string name="game_over">Game Over!</string>
     
     
     <string name="teleport_spell">Teleport</string>
