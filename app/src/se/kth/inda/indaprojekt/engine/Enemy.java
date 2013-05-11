@@ -22,23 +22,29 @@ public class Enemy extends Unit implements UnitImpacter{
 	 * @param health The initial health of the Enemy.
 	 * @param radius The radius of the Enemies' circular shape.
 	 * @param speed The speed which the Enemy runs towards its' target.
-	 * @param target The target the Enemy runs towards.
 	 */
-	public Enemy(double x, double y, double radius, int health, double speed, Unit target) {
+	public Enemy(double x, double y, double radius, int health, double speed) {
 		super(x, y, radius, health, 100);
-		this.target = target;
 		this.speed = speed;
+	}
+	
+	/**
+	 * Sets a target for this Enemy to run towards.
+	 * @param newTarget The Unit to be targeted.
+	 */
+	public void setTarget(Unit newTarget){
+		target = newTarget;
 	}
 
 	/**
-	 * Moves the Enemy towards its' given target. IF it's knockbacked
+	 * Moves the Enemy towards its' given target. If it's knockbacked
 	 * it will be knockbacked without any standard movement.
 	 */
 	@Override
 	public void onTick() {
 		if(isKnockbacked())
 			executeKnockbacks();
-		else
+		else if(target != null)
 			moveTowardsPoint(target.getX(), target.getY(), speed);
 	}
 
