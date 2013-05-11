@@ -18,7 +18,28 @@ public class LevelProgressHandler {
 	
 	private Level[] levels;
 	private int currentLevel = 0;
+	
+	//This is crude. A true upgrade system should be implemented
+	//in the future.
+	private boolean hasForcePushUpgrade = false;
+	private boolean hasTeleportUpgrade = false;
 		
+	public synchronized boolean hasForcePushUpgrade() {
+		return hasForcePushUpgrade;
+	}
+
+	public synchronized void setHasForcePushUpgrade(boolean hasForcePushUpgrade) {
+		this.hasForcePushUpgrade = hasForcePushUpgrade;
+	}
+
+	public synchronized boolean hasTeleportUpgrade() {
+		return hasTeleportUpgrade;
+	}
+
+	public synchronized void setHasTeleportUpgrade(boolean hasTeleportUpgrade) {
+		this.hasTeleportUpgrade = hasTeleportUpgrade;
+	}
+
 	public LevelProgressHandler(Dimension levelSize, int levels, int difficulty){
 		this.levels = createLevels(levelSize, levels, difficulty);
 	}
@@ -38,8 +59,13 @@ public class LevelProgressHandler {
 		
 		Spell[] spells = new Spell[3];
 		spells[0] = new FireBall(l, 8.5);
-		spells[1] = new TeleportSpell(l);
-		spells[2] = new ShockwaveSpell(l);
+		
+		if(hasTeleportUpgrade)
+			spells[1] = new TeleportSpell(l);
+		
+		if(hasForcePushUpgrade)
+			spells[2] = new ShockwaveSpell(l);
+		
 		Wizard w = new Wizard(l.getSize().getWidth() / 2, l.getSize().getHeight() / 2, 20, 10, spells, 10, 0.075);
 		
 		l.addWorldObject(w);
@@ -100,5 +126,11 @@ public class LevelProgressHandler {
 		
 	}
 	
+	/**
+	 * @return The amount of points available to the player at the current level.
+	 */
+	public int getNumPoints() {
+		return 15 + (currentLevel + 2) * 100; //TODO: These numbers were randomly selected.
+	}
 
 }
