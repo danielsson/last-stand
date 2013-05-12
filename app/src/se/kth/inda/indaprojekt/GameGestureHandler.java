@@ -22,12 +22,12 @@ public class GameGestureHandler extends SimpleOnGestureListener {
 
 	/** Teleport the wizard to the doubletapped location. */
 	@Override
-	public boolean onDoubleTap(MotionEvent event) {
+	public void onLongPress(MotionEvent event) {
 		castSpell(SpellType.TELEPORT, event.getX(), event.getY());
 
-		return super.onDoubleTap(event);
+		super.onLongPress(event);
 	}
-	
+
 	/** Send chockwave in the specified direction. */
 	@Override
 	public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
