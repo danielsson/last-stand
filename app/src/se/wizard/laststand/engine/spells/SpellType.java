@@ -1,4 +1,4 @@
-package se.kth.inda.indaprojekt.engine.spells;
+package se.wizard.laststand.engine.spells;
 
 public enum SpellType {
 	FIREBALL,

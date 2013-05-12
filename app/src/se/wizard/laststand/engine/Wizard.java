@@ -1,10 +1,10 @@
-package se.kth.inda.indaprojekt.engine;
+package se.wizard.laststand.engine;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import se.kth.inda.indaprojekt.engine.spells.SpellType;
+import se.wizard.laststand.engine.spells.SpellType;
 
 import android.graphics.Paint;
 import android.graphics.Paint.Style;

@@ -1,4 +1,4 @@
-package se.kth.inda.indaprojekt.engine;
+package se.wizard.laststand.engine;
 
 import java.util.ArrayList;
 import java.util.Stack;

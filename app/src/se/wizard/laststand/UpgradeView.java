@@ -1,4 +1,4 @@
-package se.kth.inda.indaprojekt;
+package se.wizard.laststand;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import se.wizard.laststand.R;
 
 /**
  * A simple upgrade view that allows the user to select an upgrade, if s/he have

@@ -3,12 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <se.kth.inda.indaprojekt.GameSurfaceView
+    <se.wizard.laststand.GameSurfaceView
         android:id="@+id/fullscreen_content2"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <se.kth.inda.indaprojekt.UpgradeView
+    <se.wizard.laststand.UpgradeView
         android:id="@+id/upgradeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -128,6 +128,6 @@
             android:text="@string/skip_upgrade"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textSize="15sp" />
-    </se.kth.inda.indaprojekt.UpgradeView>
+    </se.wizard.laststand.UpgradeView>
 
 </FrameLayout>

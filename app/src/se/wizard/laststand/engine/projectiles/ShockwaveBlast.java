@@ -1,10 +1,10 @@
-package se.kth.inda.indaprojekt.engine.projectiles;
+package se.wizard.laststand.engine.projectiles;
 
 import java.util.LinkedList;
 
-import se.kth.inda.indaprojekt.engine.Projectile;
-import se.kth.inda.indaprojekt.engine.Unit;
-import se.kth.inda.indaprojekt.engine.WorldObject;
+import se.wizard.laststand.engine.Projectile;
+import se.wizard.laststand.engine.Unit;
+import se.wizard.laststand.engine.WorldObject;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 

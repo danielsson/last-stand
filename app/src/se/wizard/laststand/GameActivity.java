@@ -1,12 +1,13 @@
-package se.kth.inda.indaprojekt;
+package se.wizard.laststand;
 
-import se.kth.inda.indaprojekt.GameSurfaceView.OnSurfaceCreatedListener;
-import se.kth.inda.indaprojekt.UpgradeView.OnUpgradedListener;
-import se.kth.inda.indaprojekt.engine.Dimension;
-import se.kth.inda.indaprojekt.engine.GameEngine;
-import se.kth.inda.indaprojekt.engine.GameEngine.GameEngineEventListener;
-import se.kth.inda.indaprojekt.engine.Level;
-import se.kth.inda.indaprojekt.engine.Wizard;
+import se.wizard.laststand.R;
+import se.wizard.laststand.GameSurfaceView.OnSurfaceCreatedListener;
+import se.wizard.laststand.UpgradeView.OnUpgradedListener;
+import se.wizard.laststand.engine.Dimension;
+import se.wizard.laststand.engine.GameEngine;
+import se.wizard.laststand.engine.Level;
+import se.wizard.laststand.engine.Wizard;
+import se.wizard.laststand.engine.GameEngine.GameEngineEventListener;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.GestureDetector;

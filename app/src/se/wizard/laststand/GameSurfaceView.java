@@ -1,9 +1,9 @@
-package se.kth.inda.indaprojekt;
+package se.wizard.laststand;
 
-import se.kth.inda.indaprojekt.engine.GameEngine;
-import se.kth.inda.indaprojekt.engine.Level;
-import se.kth.inda.indaprojekt.engine.Wizard;
-import se.kth.inda.indaprojekt.engine.WorldObject;
+import se.wizard.laststand.engine.GameEngine;
+import se.wizard.laststand.engine.Level;
+import se.wizard.laststand.engine.Wizard;
+import se.wizard.laststand.engine.WorldObject;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;

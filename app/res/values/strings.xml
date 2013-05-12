@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Indaprojekt</string>
+    <string name="app_name">Wizard: Last stand</string>
     
     <string name="choose_upgrades">Select upgrades</string>
     <string name="num_points">Points: %1$d</string>

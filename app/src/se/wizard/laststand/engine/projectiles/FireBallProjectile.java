@@ -1,11 +1,11 @@
-package se.kth.inda.indaprojekt.engine.projectiles;
+package se.wizard.laststand.engine.projectiles;
 
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
-import se.kth.inda.indaprojekt.engine.Projectile;
-import se.kth.inda.indaprojekt.engine.Unit;
-import se.kth.inda.indaprojekt.engine.WorldObject;
-import se.kth.inda.indaprojekt.engine.WorldObjectState;
+import se.wizard.laststand.engine.Projectile;
+import se.wizard.laststand.engine.Unit;
+import se.wizard.laststand.engine.WorldObject;
+import se.wizard.laststand.engine.WorldObjectState;
 
 public class FireBallProjectile extends Projectile{
 	

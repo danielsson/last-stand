@@ -1,6 +1,6 @@
-package se.kth.inda.indaprojekt.engine;
+package se.wizard.laststand.engine;
 
-import se.kth.inda.indaprojekt.engine.spells.SpellType;
+import se.wizard.laststand.engine.spells.SpellType;
 
 /**
  * A Spell is an non-material object that is casted by Wizards and 
