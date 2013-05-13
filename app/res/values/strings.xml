@@ -10,7 +10,7 @@
     
     
     <string name="teleport_spell">Teleport</string>
-    <string name="teleport_spell_desc">Enables you to teleport your wizard by doubletapping.</string>
+    <string name="teleport_spell_desc">Enables you to teleport your wizard by long-pressing.</string>
     <string name="teleport_spell_cost">400</string>
     
     <string name="push_spell">Force push</string>
