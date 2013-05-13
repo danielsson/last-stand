@@ -133,9 +133,10 @@ public class GameSurfaceView extends SurfaceView implements
 		
 		int yHeight = getHeight()-50;
 		int xMiddle = getWidth()/2;
+		p.setARGB(255,75,0,0);
 		canvas.drawRect(0, yHeight, xMiddle, getHeight(), p);
 		p.setARGB(255,255,0,0);
-		canvas.drawRect(0, yHeight, (float) (xMiddle/((double)(z.getHealth())/z.getMaxHealth())), getHeight(), p);
+		canvas.drawRect(0, yHeight, (float) (xMiddle*((double)(z.getHealth())/z.getMaxHealth())), getHeight(), p);
 		
 		p.setARGB(255,0,0,75);
 		canvas.drawRect(xMiddle, yHeight, getWidth(), getHeight(), p);
