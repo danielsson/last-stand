@@ -45,6 +45,11 @@ public class GameGestureHandler extends SimpleOnGestureListener {
 		return super.onSingleTapConfirmed(event);
 	}
 	
+	@Override
+	public boolean onDoubleTap(MotionEvent e) {
+		return super.onSingleTapConfirmed(e);
+	}
+	
 	private void castSpell(SpellType type, float x, float y){
 		if(wizard != null){
 			if (!wizard.isDead()) {

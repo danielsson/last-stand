@@ -9,8 +9,8 @@ import se.wizard.laststand.engine.projectiles.ShockwaveBlast;
 public class ShockwaveSpell extends Spell{
 
 	private double radius = 40;
-	private double knockbackForce = 8;
-	private int knockbackDuration = 40;
+	private double knockbackForce = 12;
+	private int knockbackDuration = 60;
 	private double speed = 14;
 	
 	public ShockwaveSpell(Level level) {
