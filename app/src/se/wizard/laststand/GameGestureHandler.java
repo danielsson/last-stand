@@ -39,7 +39,7 @@ public class GameGestureHandler extends SimpleOnGestureListener {
 
 	/** Send fireball */
 	@Override
-	public boolean onSingleTapConfirmed(MotionEvent event) {
+	public boolean onSingleTapUp(MotionEvent event) {
 		castSpell(SpellType.FIREBALL, event.getX(), event.getY());
 		
 		return super.onSingleTapConfirmed(event);
